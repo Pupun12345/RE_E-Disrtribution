@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* 🎨 Futuristic Neon Theme */
+:root {
+  --background: #0a0a0f;         /* Deep dark */
+  --foreground: #e5e7eb;         /* Light gray text */
+  --primary: #00f7ff;            /* Neon Cyan */
+  --primary-glow: #00f7ff80;     /* Glow effect */
+  --secondary: #ff007a;          /* Neon Pink */
+  --secondary-glow: #ff007a80;
+  --accent: #facc15;             /* Neon Yellow/Gold */
+  --card-bg: rgba(255, 255, 255, 0.05); /* Glass card */
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card: var(--card-bg);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* 🌙 Auto Dark Mode = Default */
+body {
+  background: radial-gradient(circle at top, #1a1a2e, #0a0a0f);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 🖼️ Headings */
+h1, h2, h3, h4 {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 📦 Glass Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 30px var(--primary-glow), 0 0 50px var(--secondary-glow);
+}
+
+/* 🔘 Futuristic Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.btn-primary:hover::before {
+  opacity: 1;
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 20px var(--secondary-glow), 0 0 40px var(--primary-glow);
+}
+
+/* 🌐 Links */
+a {
+  color: var(--primary);
+  transition: color 0.2s ease, text-shadow 0.3s ease;
+}
+a:hover {
+  color: var(--secondary);
+  text-shadow: 0 0 8px var(--secondary-glow);
+}
+
+/* 📌 Navbar */
+.navbar {
+  background: rgba(10, 10, 15, 0.7);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 📌 Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  opacity: 0.7;
+}
+footer:hover {
+  opacity: 1;
+}
+
+/* ✨ Glow Animations */
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow: 0 0 5px var(--primary), 0 0 15px var(--secondary);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--secondary), 0 0 40px var(--primary);
+  }
+}
+
+.glow {
+  animation: neonPulse 2s infinite alternate;
+}
+@layer utilities {
+  .text-neon-blue { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+  .bg-neon-blue { background-color: #00ffff; }
+  .shadow-neon { box-shadow: 0 0 10px #00ffff; }
+  .shadow-neon-hover { box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
+  .drop-shadow-neon { text-shadow: 0 0 15px #00ffff; }
+}
+

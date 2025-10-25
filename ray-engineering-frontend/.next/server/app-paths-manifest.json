@@ -1,0 +1,9 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/E-Registration-of-Vendor/vendor-gateway/page": "app/E-Registration-of-Vendor/vendor-gateway/page.js",
+  "/E-distribution/login/page": "app/E-distribution/login/page.js",
+  "/E-distribution/Vendor_Registration/page": "app/E-distribution/Vendor_Registration/page.js",
+  "/E-distribution/dashboard/page": "app/E-distribution/dashboard/page.js",
+  "/E-distribution/Mechanicals/registration/page": "app/E-distribution/Mechanicals/registration/page.js",
+  "/E-distribution/ppe/registration/page": "app/E-distribution/ppe/registration/page.js"
+}

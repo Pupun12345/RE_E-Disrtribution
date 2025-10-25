@@ -1,0 +1,315 @@
+/* 🌈 Background Container */
+.container {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #dae2f8 0%, #d6a4a4 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden; /* Prevent page scroll */
+}
+
+/* 🧾 Wrapper Box */
+.wrapper {
+  width: 95%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 35px 40px;
+  box-sizing: border-box;
+  color: #000;
+  height: 90vh; /* fits within screen */
+  overflow-y: auto; /* internal scroll only */
+  scrollbar-gutter: stable;
+}
+
+/* ✅ Scrollbar Styling */
+.wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 4px;
+}
+.wrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* ✅ Title */
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #007bff, #9b59b6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+/* ✅ Tabs */
+.tabButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tabButton {
+  background: #000;
+  border: none;
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.tabButton:hover,
+.tabButtonActive {
+  background: #007bff;
+}
+
+/* ✅ Form Section */
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.wrapper input[type="text"],
+.wrapper input[type="date"],
+.wrapper input[type="number"],
+.wrapper textarea,
+.wrapper select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #000;
+  font-size: 1rem;
+  background: #fff;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.wrapper input::placeholder,
+.wrapper textarea::placeholder {
+  color: #000;
+  opacity: 0.8;
+}
+
+/* ✅ Table */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 15px 0;
+}
+
+.wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.wrapper th,
+.wrapper td {
+  border: 1px solid #000;
+  padding: 8px;
+  font-size: 0.95rem;
+  text-align: left;
+  color: #000;
+}
+
+.wrapper th {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.amountCell {
+  text-align: right;
+  font-weight: 600;
+}
+
+/* ====================== Buttons ====================== */
+.addButton,
+.saveButton,
+.pdfButton,
+.deleteButton,
+.backButton {
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  min-width: 120px;
+  padding: 10px 18px;
+  text-align: center;
+  border: none;
+}
+
+/* Add Item */
+.addButton {
+  background: #28a745;
+  color: white;
+  margin: 10px 0 15px 0;
+}
+.addButton:hover {
+  background: #239b56;
+}
+
+/* Save Button */
+.saveButton {
+  background: #007bff;
+  color: white;
+}
+.saveButton:hover {
+  background: #0056b3;
+}
+
+/* PDF Button */
+.pdfButton {
+  background: #10b981;
+  color: white;
+}
+.pdfButton:hover {
+  background: #059669;
+}
+
+/* 🔴 Delete Button */
+.deleteButton {
+  background: #dc3545;
+  color: white;
+}
+.deleteButton:hover {
+  background: #b02a37;
+}
+
+/* ⚫ Back Button */
+.backButton {
+  background: #000;
+  color: white;
+  margin-top: 15px;
+}
+.backButton:hover {
+  background: #333;
+}
+
+/* ====================== Totals Section ====================== */
+.totalBar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 25px;
+  padding: 15px 25px;
+  background: #f8fafc;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.totalBar span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.totalBar span::before {
+  content: "•";
+  color: #007bff;
+  font-weight: bold;
+}
+.totalAmount {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* ====================== Bottom Button Row (Save + Download) ====================== */
+.bottomButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bottomButtons .rightButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ====================== Filter Section ====================== */
+.filterSection {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filterSection input[type="text"],
+.filterSection input[type="date"] {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ====================== Responsive ====================== */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 20px;
+    width: 95%;
+    height: 85vh;
+  }
+
+  .wrapper th,
+  .wrapper td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .totalBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .bottomButtons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .bottomButtons button {
+    width: 100%;
+  }
+}

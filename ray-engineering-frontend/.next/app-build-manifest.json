@@ -1,0 +1,61 @@
+{
+  "pages": {
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/E-distribution/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/E-distribution/layout.js"
+    ],
+    "/E-distribution/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-distribution/login/page.css",
+      "static/chunks/app/E-distribution/login/page.js"
+    ],
+    "/E-distribution/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-distribution/dashboard/page.css",
+      "static/chunks/app/E-distribution/dashboard/page.js"
+    ],
+    "/E-distribution/Vendor_Registration/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-distribution/Vendor_Registration/page.css",
+      "static/chunks/app/E-distribution/Vendor_Registration/page.js"
+    ],
+    "/E-Registration-of-Vendor/vendor-gateway/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-Registration-of-Vendor/vendor-gateway/page.css",
+      "static/chunks/app/E-Registration-of-Vendor/vendor-gateway/page.js"
+    ],
+    "/E-distribution/Mechanicals/registration/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-distribution/Mechanicals/registration/page.css",
+      "static/chunks/app/E-distribution/Mechanicals/registration/page.js"
+    ],
+    "/E-distribution/ppe/registration/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/E-distribution/ppe/registration/page.css",
+      "static/chunks/app/E-distribution/ppe/registration/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/app/E-distribution/login/login.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+.login_container__XuETx {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("/login-bg.jpg") no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_overlay__WRG0r {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 20, 40, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.login_loginBox__DjUid {
+  position: relative;
+  z-index: 10;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+}
+
+.login_title__lHhdm {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(to right, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login_subtitle__OAAj_ {
+  font-size: 14px;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.login_error__1KZvm {
+  color: #ff6b6b;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.login_form__t2PcH {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login_inputGroup___SWlU {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+.login_inputGroup___SWlU input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.login_icon__PSSUp {
+  font-size: 16px;
+  color: #ccc;
+}
+
+.login_captchaRow__TvV_o {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login_captchaBox__skY5B {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  letter-spacing: 3px;
+}
+
+.login_captchaInput__D9oYH {
+  flex: 2;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.login_refreshBtn__4E359 {
+  border: none;
+  background: #3498db;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login_refreshBtn__4E359:hover {
+  background: #2980b9;
+}
+
+.login_button__FvqMm {
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.login_button__FvqMm:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #2980b9, #8e44ad);
+}
+
+.login_footerLinks__xar65 {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.login_footerLinks__xar65 a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.login_footerLinks__xar65 a:hover {
+  color: #fff;
+}
+

@@ -1,0 +1,135 @@
+/* ===============================
+   Container
+   =============================== */
+.formContainer {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #000; /* ✅ Makes all text black */
+}
+
+/* ===============================
+   Title with gradient
+   =============================== */
+.formContainerTitle {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00f0ff, #5a6eff, #ff3a7d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===============================
+   Form Elements
+   =============================== */
+.formElement {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.formLabel {
+  font-weight: 600;
+  color: #000;
+}
+
+.formInput,
+.formSelect {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  color: #000;
+  background-color: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus,
+.formSelect:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 6px rgba(0, 112, 243, 0.25);
+}
+
+/* ===============================
+   Select Box for Existing Items
+   =============================== */
+.selectBox {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* ===============================
+   Divider
+   =============================== */
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+
+/* ===============================
+   Buttons
+   =============================== */
+.addBtn,
+.backBtn {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.addBtn {
+  background-color: #000;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.addBtn:hover {
+  background-color: #222;
+  transform: translateY(-1px);
+}
+
+.backSection {
+  display: flex;
+  justify-content: center;
+}
+
+.backBtn {
+  background-color: #000;
+  color: #fff;
+}
+
+.backBtn:hover {
+  background-color: #222;
+  transform: translateY(-1px);
+}
+
+/* ===============================
+   Responsive
+   =============================== */
+@media (max-width: 600px) {
+  .formContainer {
+    padding: 20px;
+    margin: 30px 15px;
+  }
+
+  .formInput,
+  .formSelect,
+  .addBtn,
+  .backBtn {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+}

@@ -1,0 +1,272 @@
+/* 🌐 MECHANICAL RETURN — Centered Buttons & Fixed Viewport UI */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background: #f6f8fc;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  overflow: hidden; /* Prevent page scroll */
+}
+
+/* Wrapper Box */
+.wrapper {
+  background: #fff;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000;
+  transition: 0.3s ease;
+  height: 100%;
+  padding: 20px 25px;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #2563eb, #1e3a8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Tabs */
+.tabButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  border: 1px solid #d1d5db;
+  background: #f3f4f6;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #000;
+  transition: 0.25s;
+}
+
+.tabButton:hover {
+  background: #e0e7ff;
+}
+
+.tabButtonActive {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Form Section */
+.formBox {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  flex-grow: 1;
+  overflow-y: auto; /* Scroll inside if large */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input,
+.select {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: #000;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* ✅ Centered Save / Back Buttons */
+.bottomButtons {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  z-index: 5;
+}
+
+.saveButton,
+.backButton {
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 0.95rem;
+}
+
+/* Save Button */
+.saveButton {
+  background: #2563eb;
+  color: #fff;
+}
+
+.saveButton:hover {
+  background: #1d4ed8;
+}
+
+/* Back Button */
+.backButton {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.backButton:hover {
+  background: #d1d5db;
+}
+
+/* Report Section */
+.reportBox {
+  width: 100%;
+  max-width: 1000px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+/* Scrollable Table */
+.reportScroll {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-height: calc(100vh - 320px);
+}
+
+.reportTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.reportTable th,
+.reportTable td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+  color: #000;
+  font-size: 0.95rem;
+}
+
+.reportTable th {
+  background-color: #e3f2fd;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Edit Button */
+.editButton {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.editButton:hover {
+  background: #0284c7;
+}
+
+/* Toast Message */
+.toast {
+  background: #f0fdf4;
+  border: 1px solid #0eb04c;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #065f46;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Dropdown Handling */
+.openDropdown {
+  overflow: visible !important;
+}
+
+/* Scrollbar */
+.reportScroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.reportScroll::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 8px;
+}
+
+.reportScroll::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 15px;
+  }
+
+  .reportScroll {
+    max-height: calc(100vh - 340px);
+  }
+
+  .tabButtons {
+    flex-direction: column;
+  }
+
+  .bottomButtons {
+    flex-direction: column;
+  }
+}

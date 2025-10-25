@@ -1,0 +1,200 @@
+/* 🌌 Global Page Layout */
+.container,
+.vendor-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+/* 🧊 Compact Card Container */
+.form,
+.vendor-container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  width: 100%;
+  max-width: 380px; /* 🟦 Reduced width for better screen fit */
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.8s ease-in-out;
+  margin: auto;
+}
+
+/* 🌟 Header */
+.header,
+.vendor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h1,
+.vendor-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✏️ Edit / Icon Buttons */
+.edit-icon,
+.icon {
+  font-size: 18px;
+  cursor: pointer;
+  color: #00c6ff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.edit-icon:hover,
+.icon:hover {
+  transform: scale(1.15);
+  color: #60a5fa;
+}
+
+/* 🧾 Form Styles */
+.form form,
+.vendor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* 🎯 Input Group */
+.inputGroup,
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.inputGroup label,
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+/* ✨ Input Fields */
+.inputGroup input,
+.form-group input,
+.inputGroup textarea,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  resize: none;
+}
+
+.inputGroup input::placeholder,
+.form-group input::placeholder,
+.inputGroup textarea::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+.inputGroup input:focus,
+.form-group input:focus,
+.inputGroup textarea:focus,
+.form-group textarea:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 10px #00c6ff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🪄 Buttons */
+.submitBtn,
+.neon-button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.submitBtn:hover,
+.neon-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 114, 255, 0.5);
+}
+
+/* ✨ Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .form,
+  .vendor-container {
+    max-width: 90vw;
+    padding: 1.2rem;
+    border-radius: 14px;
+  }
+
+  .header h1,
+  .vendor-title {
+    font-size: 1.2rem;
+  }
+
+  .inputGroup input,
+  .form-group input,
+  .inputGroup textarea,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+
+  .submitBtn,
+  .neon-button {
+    font-size: 0.95rem;
+  }
+}
+
+/* 🧭 Optional Link/Button Section */
+.link-btn {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #00c6ff;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.link-btn:hover {
+  color: #60a5fa;
+}

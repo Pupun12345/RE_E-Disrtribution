@@ -1,0 +1,216 @@
+/* 🌐 CLEAN RESPONSIVE DISTRIBUTION PAGE CSS */
+/* Author: Animesh Mohapatra | Optimized by ChatGPT */
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background: #f6f8fc;
+}
+
+.wrapper {
+  background: #fff;
+  width: 90%;
+  max-width: 1100px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  color: #000;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+.tabButtons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabButton {
+  padding: 10px 25px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #000;
+  transition: 0.2s ease;
+}
+
+.tabButton:hover {
+  background: #e2e8f0;
+}
+
+.tabButtonActive {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* ======================= FORM CARD ======================= */
+.formCard {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 25px;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.grid input,
+.grid select {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.grid input:focus,
+.grid select:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.saveButton {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.saveButton:hover {
+  background: #1d4ed8;
+}
+
+/* ======================= REPORT TABLE ======================= */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto; /* ✅ Horizontal scroll */
+  overflow-y: hidden; /* 🚫 No vertical scroll */
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* ✅ Custom horizontal scrollbar only */
+.tableWrapper::-webkit-scrollbar {
+  height: 8px; /* Horizontal scrollbar height */
+}
+
+.tableWrapper::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* ✅ Table Styles */
+.tableWrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* Forces horizontal scroll if smaller screen */
+  color: #000;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.tableWrapper th,
+.tableWrapper td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+  color: #000;
+  font-size: 0.95rem;
+}
+
+.tableWrapper th {
+  background-color: #e3f2fd;
+  font-weight: 600;
+}
+
+/* Optional: sticky header */
+.tableWrapper th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* ======================= BOTTOM BUTTONS ======================= */
+.bottomButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.pdfButton,
+.backButton {
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease;
+}
+
+.pdfButton {
+  background: #0eb04c;
+}
+.pdfButton:hover {
+  background: #0a8e3b;
+}
+
+.backButton {
+  background: #111827;
+}
+.backButton:hover {
+  background: #1f2937;
+}
+
+/* ======================= TOAST MESSAGE ======================= */
+.toast {
+  background: #fff8e1;
+  border: 1px solid #0eb04c;
+  padding: 10px 15px;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 10px;
+}

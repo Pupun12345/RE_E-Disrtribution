@@ -1,0 +1,204 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/app/E-distribution/Vendor_Registration/VendorRegistration.module.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* 🌌 Global Page Layout */
+.VendorRegistration_container__FmXBd,
+.VendorRegistration_vendor-page__6jE6H {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+/* 🧊 Compact Card Container */
+.VendorRegistration_form__lxS_x,
+.VendorRegistration_vendor-container__GRwT7 {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  width: 100%;
+  max-width: 380px; /* 🟦 Reduced width for better screen fit */
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  animation: VendorRegistration_fadeIn__wT4c_ 0.8s ease-in-out;
+  margin: auto;
+}
+
+/* 🌟 Header */
+.VendorRegistration_header__4BkBt,
+.VendorRegistration_vendor-header__Twj2P {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.VendorRegistration_header__4BkBt h1,
+.VendorRegistration_vendor-title__no_Sh {
+  font-size: 1.4rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✏️ Edit / Icon Buttons */
+.VendorRegistration_edit-icon__2YQpa,
+.VendorRegistration_icon__lbgCp {
+  font-size: 18px;
+  cursor: pointer;
+  color: #00c6ff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.VendorRegistration_edit-icon__2YQpa:hover,
+.VendorRegistration_icon__lbgCp:hover {
+  transform: scale(1.15);
+  color: #60a5fa;
+}
+
+/* 🧾 Form Styles */
+.VendorRegistration_form__lxS_x form,
+.VendorRegistration_vendor-form__hQwL4 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* 🎯 Input Group */
+.VendorRegistration_inputGroup__tPEJl,
+.VendorRegistration_form-group__YuVHb {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.VendorRegistration_inputGroup__tPEJl label,
+.VendorRegistration_form-group__YuVHb label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+/* ✨ Input Fields */
+.VendorRegistration_inputGroup__tPEJl input,
+.VendorRegistration_form-group__YuVHb input,
+.VendorRegistration_inputGroup__tPEJl textarea,
+.VendorRegistration_form-group__YuVHb textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  resize: none;
+}
+
+.VendorRegistration_inputGroup__tPEJl input::placeholder,
+.VendorRegistration_form-group__YuVHb input::placeholder,
+.VendorRegistration_inputGroup__tPEJl textarea::placeholder,
+.VendorRegistration_form-group__YuVHb textarea::placeholder {
+  color: #94a3b8;
+}
+
+.VendorRegistration_inputGroup__tPEJl input:focus,
+.VendorRegistration_form-group__YuVHb input:focus,
+.VendorRegistration_inputGroup__tPEJl textarea:focus,
+.VendorRegistration_form-group__YuVHb textarea:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 10px #00c6ff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🪄 Buttons */
+.VendorRegistration_submitBtn__6Fzp3,
+.VendorRegistration_neon-button__9vIsh {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.VendorRegistration_submitBtn__6Fzp3:hover,
+.VendorRegistration_neon-button__9vIsh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 114, 255, 0.5);
+}
+
+/* ✨ Animations */
+@keyframes VendorRegistration_fadeIn__wT4c_ {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .VendorRegistration_form__lxS_x,
+  .VendorRegistration_vendor-container__GRwT7 {
+    max-width: 90vw;
+    padding: 1.2rem;
+    border-radius: 14px;
+  }
+
+  .VendorRegistration_header__4BkBt h1,
+  .VendorRegistration_vendor-title__no_Sh {
+    font-size: 1.2rem;
+  }
+
+  .VendorRegistration_inputGroup__tPEJl input,
+  .VendorRegistration_form-group__YuVHb input,
+  .VendorRegistration_inputGroup__tPEJl textarea,
+  .VendorRegistration_form-group__YuVHb textarea {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+
+  .VendorRegistration_submitBtn__6Fzp3,
+  .VendorRegistration_neon-button__9vIsh {
+    font-size: 0.95rem;
+  }
+}
+
+/* 🧭 Optional Link/Button Section */
+.VendorRegistration_link-btn__uLwqG {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #00c6ff;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.VendorRegistration_link-btn__uLwqG:hover {
+  color: #60a5fa;
+}
+
