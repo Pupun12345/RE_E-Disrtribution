@@ -22,6 +22,8 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const url = process.env.NEXT_PUBLIC_API_URL
+
   // ✅ Refresh captcha
   const refreshCaptcha = () => {
     const random = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -44,7 +46,7 @@ export default function LoginPage() {
       setLoading(true);
 
       // ✅ Your requested fetch code (simplified)
-      const res = await fetch("http://localhost:4000/login", {
+      const res = await fetch(`${url}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

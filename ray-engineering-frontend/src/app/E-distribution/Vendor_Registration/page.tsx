@@ -31,6 +31,8 @@ function VendorRegistrationPage() {
 
   const [loading, setLoading] = useState(false);
 
+  const url = process.env.NEXT_PUBLIC_API_URL;
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -49,7 +51,7 @@ function VendorRegistrationPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:4000/api/vendors", {
+      const res = await fetch(`${url}/api/vendors`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

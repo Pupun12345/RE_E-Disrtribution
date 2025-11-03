@@ -45,6 +45,8 @@ function VendorGatewayPage() {
     end: null as Date | null,
   });
 
+  const url = process.env.NEXT_PUBLIC_API_URL
+
   // ✅ Fetch vendors with token
   useEffect(() => {
     const fetchVendors = async () => {
@@ -56,7 +58,7 @@ function VendorGatewayPage() {
       }
 
       try {
-        const res = await fetch("http://localhost:4000/api/vendors", {
+        const res = await fetch(`${url}/api/vendors`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -99,7 +101,7 @@ function VendorGatewayPage() {
 
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:4000/api/vendors/${id}`, {
+      const res = await fetch(`${url}/api/vendors/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -124,7 +126,7 @@ function VendorGatewayPage() {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        `http://localhost:4000/api/vendors/${editingParty.id}`,
+        `${url}/api/vendors/${editingParty.id}`,
         {
           method: "PUT",
           headers: {
