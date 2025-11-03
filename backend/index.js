@@ -32,10 +32,7 @@ const app = express();
 // =============================
 app.use(express.json());
 app.use(
-  cors({
-    origin: "http://localhost:3000", // frontend URL
-    credentials: true,
-  })
+  cors()
 );
 
 app.use("/api/purchases", purchaseRoutes);
