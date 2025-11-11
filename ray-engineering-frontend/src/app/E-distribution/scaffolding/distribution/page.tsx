@@ -11,6 +11,7 @@ interface Item {
   itemName: string;
   unit: string;
   unitWeight?: number;
+  puw?: number; 
 }
 
 interface DistributionRecord {
@@ -105,7 +106,7 @@ export default function DistributionPage() {
     if (field === "itemName") {
       const selected = items.find((i) => i.itemName === value);
       updatedForm.unit = selected?.unit || "";
-      updatedForm.unitWeight = selected?.unitWeight?.toString() || "";
+      updatedForm.unitWeight = selected?.puw?.toString() || "";
     }
 
     if (field === "issuedQuantity" || field === "unitWeight") {
@@ -382,7 +383,9 @@ export default function DistributionPage() {
               type="text"
               placeholder="🔍 Search..."
               value={filters.search}
-              onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, search: e.target.value })
+              }
             />
             <input
               type="date"
@@ -559,7 +562,10 @@ export default function DistributionPage() {
               readOnly
             />
             <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-              <button onClick={updateDistribution} className={styles.saveButton}>
+              <button
+                onClick={updateDistribution}
+                className={styles.saveButton}
+              >
                 💾 Save
               </button>
               <button

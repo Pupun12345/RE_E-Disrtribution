@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
-import { FaUser, FaLock, FaSyncAlt } from "react-icons/fa";
+import { FaUser, FaLock, FaSyncAlt, FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface LoginResponse {
   success?: boolean;
@@ -17,12 +17,13 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [captcha, setCaptcha] = useState("");
   const [generatedCaptcha, setGeneratedCaptcha] = useState("9K7RFP");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const url = process.env.NEXT_PUBLIC_API_URL
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   // ✅ Refresh captcha
   const refreshCaptcha = () => {
@@ -44,8 +45,6 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-
-      // ✅ Your requested fetch code (simplified)
       const res = await fetch(`${url}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,15 +94,26 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* ✅ Password with Eye Toggle */}
           <div className={styles.inputGroup}>
             <FaLock className={styles.icon} />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.eyeBtn}
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
 
           {/* ✅ Captcha Section */}

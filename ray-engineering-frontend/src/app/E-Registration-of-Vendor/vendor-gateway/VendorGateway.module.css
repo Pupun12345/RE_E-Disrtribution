@@ -353,3 +353,8 @@
     font-size: 0.95rem;
   }
 }
+.partyTable td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem; /* adjust for spacing: 0.5rem–1rem */
+}
