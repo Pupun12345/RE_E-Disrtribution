@@ -103,13 +103,11 @@ export default function DashboardPage() {
       case "Mechanical Tools":
         if (feature === "Registration")
           return `${base}/Mechanicals/registration`;
-        if (feature === "Purchase Entry")
-          return `${base}/Mechanicals/purchase`;
+        if (feature === "Purchase Entry") return `${base}/Mechanicals/purchase`;
         if (feature === "Distribution Materials")
           return `${base}/Mechanicals/distribution`;
         if (feature === "Return") return `${base}/Mechanicals/return`;
-        if (feature === "Stock Report")
-          return `${base}/Mechanicals/stock`;
+        if (feature === "Stock Report") return `${base}/Mechanicals/stock`;
         break;
       case "Scaffolding Materials":
         if (feature === "Registration")
@@ -222,8 +220,18 @@ export default function DashboardPage() {
 
       {/* ===== Main Section with Video Background ===== */}
       <main className={styles.mainVideoSection}>
-        <video autoPlay muted loop playsInline className={styles.backgroundVideo}>
-          <source src="/video.mp4" type="video/mp4" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.backgroundVideo}
+        >
+          <source
+            src="https://res.cloudinary.com/dvforffjb/video/upload/f_auto,q_auto/v1762849167/video_ztsjcp.mp4"
+            type="video/mp4"
+          />
+          {/* Your browser does not support the video tag. */}
         </video>
 
         <div className={styles.overlayContent}>
@@ -240,8 +248,6 @@ export default function DashboardPage() {
                 ? ""
                 : "You have access to your Profile and Dashboard."}
             </p>
-
-            
           </div>
 
           <footer className={styles.footer}>
@@ -252,6 +258,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-//Updated Dashboard with video background and improved sidebar navigation
-//Updated Dashboard with video background and improved sidebar navigation
