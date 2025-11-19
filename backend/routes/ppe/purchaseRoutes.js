@@ -9,7 +9,9 @@ router.post("/", async (req, res) => {
     const { partyName, invoiceNumber, invoiceDate, items, total } = req.body;
 
     if (!partyName || !invoiceNumber || !invoiceDate || !items?.length) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
     }
 
     const purchase = await Purchase.create({
@@ -54,12 +56,40 @@ router.get("/", async (req, res) => {
 });
 
 // ✅ DELETE purchase
+// ✅ DELETE purchase + update stock
 router.delete("/:id", async (req, res) => {
   try {
+    // 1️⃣ Find the purchase being deleted
+    const purchase = await Purchase.findById(req.params.id);
+
+    if (!purchase) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Purchase not found" });
+    }
+
+    // 2️⃣ Reverse stock changes
+    for (const it of purchase.items) {
+      const stock = await Stock.findOne({ itemName: it.itemName });
+
+      if (stock) {
+        stock.qty -= Number(it.qty);
+
+        // Prevent negative stock
+        if (stock.qty < 0) stock.qty = 0;
+
+        await stock.save();
+      }
+    }
+
+    // 3️⃣ Delete the purchase
     await Purchase.findByIdAndDelete(req.params.id);
+
+    // 4️⃣ Return updated list
     const purchases = await Purchase.find();
     res.json({ success: true, purchases });
   } catch (err) {
+    console.error("Error deleting purchase:", err);
     res.status(500).json({ success: false, message: err.message });
   }
 });
@@ -76,7 +106,9 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!purchase)
-      return res.status(404).json({ success: false, message: "Purchase not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Purchase not found" });
 
     const allPurchases = await Purchase.find();
     res.json({ success: true, purchases: allPurchases });

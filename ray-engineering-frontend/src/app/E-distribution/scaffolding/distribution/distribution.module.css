@@ -349,3 +349,16 @@
 .tableScroll table {
   min-width: 1000px;
 }
+.deleteButton {
+  background: #ff4c4c;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.deleteButton:hover {
+  background: #cc0000;
+}

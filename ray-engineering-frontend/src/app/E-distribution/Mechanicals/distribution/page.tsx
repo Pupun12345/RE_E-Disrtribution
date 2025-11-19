@@ -190,6 +190,32 @@ export default function DistributionPage() {
       alert("❌ Error updating record!");
     }
   };
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return;
+
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this distribution?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await api.delete(`/api/mechanical/distribution/${id}`);
+
+      const updatedList = Array.isArray(res.distributions)
+        ? res.distributions
+        : [];
+
+      setRecords(updatedList);
+
+      // Refresh stock
+      fetchStock();
+
+      alert(" Distribution deleted & stock updated!");
+    } catch (err) {
+      console.error("Delete Error:", err);
+      alert("❌ Failed to delete distribution");
+    }
+  };
 
   // ====================== FILTER LOGIC ======================
   const filteredRecords = records.filter((r) => {
@@ -248,13 +274,17 @@ export default function DistributionPage() {
 
       <div className={styles.tabButtons}>
         <button
-          className={activeTab === "entry" ? styles.tabButtonActive : styles.tabButton}
+          className={
+            activeTab === "entry" ? styles.tabButtonActive : styles.tabButton
+          }
           onClick={() => setActiveTab("entry")}
         >
           Entry Form
         </button>
         <button
-          className={activeTab === "report" ? styles.tabButtonActive : styles.tabButton}
+          className={
+            activeTab === "report" ? styles.tabButtonActive : styles.tabButton
+          }
           onClick={() => setActiveTab("report")}
         >
           Report
@@ -304,7 +334,10 @@ export default function DistributionPage() {
           </div>
 
           <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
-            <button onClick={handleAddDistribution} className={styles.addButton}>
+            <button
+              onClick={handleAddDistribution}
+              className={styles.addButton}
+            >
               Save Distribution
             </button>
           </div>
@@ -326,9 +359,7 @@ export default function DistributionPage() {
             <input
               type="date"
               value={filters.from}
-              onChange={(e) =>
-                setFilters({ ...filters, from: e.target.value })
-              }
+              onChange={(e) => setFilters({ ...filters, from: e.target.value })}
             />
             <input
               type="date"
@@ -354,6 +385,7 @@ export default function DistributionPage() {
                   <th>Issued To</th>
                   <th>Location</th>
                   <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -371,7 +403,15 @@ export default function DistributionPage() {
                           onClick={() => setEditRecord(r)}
                           className={styles.editButton}
                         >
-                          ✏️ Edit
+                          Edit
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => handleDelete(r._id)}
+                          className={styles.deleteButton}
+                        >
+                          Delete
                         </button>
                       </td>
                     </tr>
@@ -403,7 +443,10 @@ export default function DistributionPage() {
               type="number"
               value={editRecord.quantity}
               onChange={(e) =>
-                setEditRecord({ ...editRecord, quantity: Number(e.target.value) })
+                setEditRecord({
+                  ...editRecord,
+                  quantity: Number(e.target.value),
+                })
               }
             />
 
@@ -438,7 +481,10 @@ export default function DistributionPage() {
             />
 
             <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-              <button onClick={updateDistribution} className={styles.saveButton}>
+              <button
+                onClick={updateDistribution}
+                className={styles.saveButton}
+              >
                 💾 Save
               </button>
               <button

@@ -93,6 +93,26 @@ export default function ReturnPage() {
       showMessage("⚠️ Please fill required fields");
       return;
     }
+    const handleDelete = async (id: string | undefined) => {
+      if (!id) return;
+
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this return record?"
+      );
+      if (!confirmDelete) return;
+
+      try {
+        const res = await api.delete(`/api/mechanical/returns/${id}`);
+
+        showMessage("🗑️ Return record deleted & stock updated");
+
+        // refresh list
+        fetchReturns();
+      } catch (err) {
+        console.error("Delete error:", err);
+        showMessage("❌ Failed to delete record");
+      }
+    };
 
     const payload = {
       items: [formData],
@@ -129,7 +149,28 @@ export default function ReturnPage() {
     if (record.items && record.items.length > 0) {
       setFormData(record.items[0]);
       setEditingId(record._id || null);
-      showMessage("✏️ Editing existing record");
+      showMessage(" Editing existing record");
+    }
+  };
+
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return;
+
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this return record?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await api.delete(`/api/mechanical/returns/${id}`);
+
+      showMessage("🗑️ Return record deleted & stock updated");
+
+      // refresh list
+      fetchReturns();
+    } catch (err) {
+      console.error("Delete error:", err);
+      showMessage("❌ Failed to delete record");
     }
   };
 
@@ -348,6 +389,7 @@ export default function ReturnPage() {
                     <th>Person Name</th>
                     <th>Location / Site</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -373,6 +415,14 @@ export default function ReturnPage() {
                               onClick={() => handleEdit(r)}
                             >
                               Edit
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className={styles.deleteButton}
+                              onClick={() => handleDelete(r._id)}
+                            >
+                              Delete
                             </button>
                           </td>
                         </tr>

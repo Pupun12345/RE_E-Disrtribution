@@ -102,14 +102,20 @@ export default function ReturnPage() {
 
     // Auto-calculate Return Weight = Unit Weight × Return Quantity
     const qty = Number(field === "issuedQty" ? value : formData.issuedQty) || 0;
-    const unitWt = Number(field === "unitWeight" ? value : formData.unitWeight) || 0;
+    const unitWt =
+      Number(field === "unitWeight" ? value : formData.unitWeight) || 0;
     updated.issuedWeight = qty * unitWt;
 
     setFormData(updated);
   };
 
   const handleSave = async () => {
-    if (!formData.itemName || !formData.woNumber || !formData.tslManager || !formData.issuedQty) {
+    if (
+      !formData.itemName ||
+      !formData.woNumber ||
+      !formData.tslManager ||
+      !formData.issuedQty
+    ) {
       showMessage("⚠️ Fill all required fields before saving");
       return;
     }
@@ -118,7 +124,9 @@ export default function ReturnPage() {
       woNumber: formData.woNumber.trim(),
       location: formData.location.trim(),
       personName: formData.tslManager.trim(),
-      returnDate: formData.returnDate ? new Date(formData.returnDate) : new Date(),
+      returnDate: formData.returnDate
+        ? new Date(formData.returnDate)
+        : new Date(),
       itemName: formData.itemName.trim(),
       unit: formData.unit,
       unitWeight: Number(formData.unitWeight) || 0,
@@ -162,7 +170,9 @@ export default function ReturnPage() {
       location: record.location,
       tslManager: record.personName,
       supervisorName: "",
-      returnDate: record.returnDate ? new Date(record.returnDate).toISOString().split("T")[0] : "",
+      returnDate: record.returnDate
+        ? new Date(record.returnDate).toISOString().split("T")[0]
+        : "",
       itemName: record.itemName,
       unitWeight: record.unitWeight,
       issuedQty: record.returnQuantity,
@@ -172,6 +182,31 @@ export default function ReturnPage() {
     setEditingId(record._id || null);
     showMessage("✏️ Editing existing record");
   };
+  const handleDelete = async (record: ReturnRecord) => {
+    const formattedDate = record.returnDate
+      ? new Date(record.returnDate).toISOString().split("T")[0]
+      : "";
+
+    if (
+      !window.confirm(`Delete ${record.itemName} returned on ${formattedDate}?`)
+    ) {
+      return;
+    }
+
+    try {
+      const res = await api.delete(`/api/scaffolding-returns/${record._id}`);
+
+      if (res.success) {
+        showMessage("🗑️ Return deleted successfully");
+        fetchReturns();
+      } else {
+        showMessage("❌ Failed to delete return");
+      }
+    } catch (err) {
+      console.error(err);
+      showMessage("❌ Error deleting return");
+    }
+  };
 
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -179,7 +214,17 @@ export default function ReturnPage() {
     autoTable(doc, {
       startY: 25,
       head: [
-        ["W/O No", "Location", "TSL Manager", "Return Date", "Item", "Unit", "Unit Wt", "Return Qty", "Return Wt"],
+        [
+          "W/O No",
+          "Location",
+          "TSL Manager",
+          "Return Date",
+          "Item",
+          "Unit",
+          "Unit Wt",
+          "Return Qty",
+          "Return Wt",
+        ],
       ],
       body: returnRecords.map((r) => [
         r.woNumber,
@@ -204,13 +249,17 @@ export default function ReturnPage() {
 
         <div className={styles.tabButtons}>
           <button
-            className={`${styles.tabButton} ${activeTab === "entry" ? styles.tabButtonActive : ""}`}
+            className={`${styles.tabButton} ${
+              activeTab === "entry" ? styles.tabButtonActive : ""
+            }`}
             onClick={() => setActiveTab("entry")}
           >
             Entry Form
           </button>
           <button
-            className={`${styles.tabButton} ${activeTab === "report" ? styles.tabButtonActive : ""}`}
+            className={`${styles.tabButton} ${
+              activeTab === "report" ? styles.tabButtonActive : ""
+            }`}
             onClick={() => setActiveTab("report")}
           >
             Report
@@ -293,6 +342,7 @@ export default function ReturnPage() {
                     <th>Return Qty</th>
                     <th>Return Wt</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -308,15 +358,30 @@ export default function ReturnPage() {
                         <td>{r.woNumber}</td>
                         <td>{r.location}</td>
                         <td>{r.personName}</td>
-                        <td>{r.returnDate ? new Date(r.returnDate).toLocaleDateString() : ""}</td>
+                        <td>
+                          {r.returnDate
+                            ? new Date(r.returnDate).toLocaleDateString()
+                            : ""}
+                        </td>
                         <td>{r.itemName}</td>
                         <td>{r.unit}</td>
                         <td>{r.unitWeight}</td>
                         <td>{r.returnQuantity}</td>
                         <td>{r.returnWeight}</td>
                         <td>
-                          <button className={styles.addButton} onClick={() => handleEdit(r)}>
+                          <button
+                            className={styles.editButton}
+                            onClick={() => handleEdit(r)}
+                          >
                             Edit
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => handleDelete(r)}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>
@@ -330,7 +395,10 @@ export default function ReturnPage() {
               <button className={styles.pdfButton} onClick={exportPDF}>
                 📄 Download Report
               </button>
-              <button className={styles.backButton} onClick={() => router.back()}>
+              <button
+                className={styles.backButton}
+                onClick={() => router.back()}
+              >
                 Back
               </button>
             </div>

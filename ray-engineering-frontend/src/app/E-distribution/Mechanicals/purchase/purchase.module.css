@@ -317,3 +317,30 @@
     width: 100%;
   }
 }
+.deleteButton {
+  background: #ff4d4d;
+  padding: 8px 14px;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.deleteButton:hover {
+  background: #e60000;
+}
+/* Center align Edit & Delete columns */
+.tableWrapper table td:nth-child(6),
+.tableWrapper table td:nth-child(7),
+.tableWrapper table th:nth-child(6),
+.tableWrapper table th:nth-child(7) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Optional: Center button inside td */
+.tableWrapper table td button {
+  display: inline-block;
+  margin: 0 auto;
+}

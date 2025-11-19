@@ -74,4 +74,36 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Delete a distribution record + restore stock
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1️⃣ Fetch the record to restore stock before deletion
+    const record = await Distribution.findById(id);
+    if (!record) {
+      return res.status(404).json({ success: false, message: "Record not found" });
+    }
+
+    // 2️⃣ Find the stock item
+    const stockItem = await Stock.findOne({ itemName: record.itemName });
+    if (stockItem) {
+      stockItem.qty += Number(record.quantity); // 🔥 Restore qty back to stock
+      await stockItem.save();
+    }
+
+    // 3️⃣ Delete the record
+    await Distribution.findByIdAndDelete(id);
+
+    // 4️⃣ Return updated list
+    const all = await Distribution.find().sort({ issueDate: -1 });
+
+    res.status(200).json({ success: true, distributions: all });
+  } catch (err) {
+    console.error("Error deleting distribution:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
 module.exports = router;

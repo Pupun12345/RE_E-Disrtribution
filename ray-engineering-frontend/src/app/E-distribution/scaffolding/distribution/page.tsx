@@ -11,7 +11,7 @@ interface Item {
   itemName: string;
   unit: string;
   unitWeight?: number;
-  puw?: number; 
+  puw?: number;
 }
 
 interface DistributionRecord {
@@ -137,6 +137,30 @@ export default function DistributionPage() {
     }
     return true;
   };
+  const handleDelete = async (record: DistributionRecord) => {
+  const formattedDate = record.issueDate.split("T")[0];
+
+  if (!window.confirm(`Delete ${record.itemName} issued on ${formattedDate}?`)) {
+    return;
+  }
+
+  try {
+    const res = await api.delete(`/api/scaffolding-distribution/${record._id}`);
+
+    if (res.success) {
+      await fetchDistributions(); 
+      await fetchStock();
+      alert("🗑️ Record deleted successfully!");
+    } else {
+      alert("❌ Failed to delete record!");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ Error deleting record!");
+  }
+};
+
+
 
   // ====================== ADD DISTRIBUTION ======================
   const handleAddDistribution = async () => {
@@ -421,6 +445,7 @@ export default function DistributionPage() {
                     <th>Issued Qty</th>
                     <th>Issued Wt.</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -447,7 +472,15 @@ export default function DistributionPage() {
                               })
                             }
                           >
-                            ✏️ Edit
+                             Edit
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => handleDelete(r)}
+                          >
+                             Delete
                           </button>
                         </td>
                       </tr>

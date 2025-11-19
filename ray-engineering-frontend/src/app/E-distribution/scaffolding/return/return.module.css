@@ -22,8 +22,11 @@
   align-items: center;
   font-family: "Poppins", sans-serif;
   color: #000;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
+/* ======================= TITLE ======================= */
 .title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -31,6 +34,7 @@
   margin-bottom: 20px;
 }
 
+/* ======================= TABS ======================= */
 .tabButtons {
   display: flex;
   gap: 10px;
@@ -59,7 +63,15 @@
 }
 
 /* ======================= FORM CARD ======================= */
-.formCard {
+.formScrollWrapper {
+  width: 100%;
+  overflow-x: auto;            /* ⬅️ NEW: Horizontal scroll */
+  padding-bottom: 10px;
+}
+
+.formCard,
+.formcontainer {
+  min-width: 900px;            /* ⬅️ NEW: Forces scroll */
   background: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
@@ -89,7 +101,6 @@
   color: #000;
   width: 100%;
   box-sizing: border-box;
-  transition: border-color 0.2s ease;
 }
 
 .grid input:focus,
@@ -116,8 +127,9 @@
 /* ======================= REPORT TABLE ======================= */
 .tableWrapper {
   width: 100%;
-  overflow-x: auto; /* ✅ Horizontal scroll */
-  overflow-y: hidden; /* 🚫 No vertical scroll */
+  max-height: 400px;           /* ⬅️ NEW: Vertical scroll */
+  overflow-y: auto;            /* ⬅️ NEW: Vertical scroll */
+  overflow-x: auto;            /* Horizontal scroll */
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   margin-bottom: 15px;
@@ -126,28 +138,26 @@
   scrollbar-color: #cbd5e1 #f8fafc;
 }
 
-/* ✅ Custom horizontal scrollbar only */
+/* Horizontal scrollbar styling */
 .tableWrapper::-webkit-scrollbar {
-  height: 8px; /* Horizontal scrollbar height */
+  height: 8px;
 }
-
 .tableWrapper::-webkit-scrollbar-track {
   background: #f8fafc;
   border-radius: 10px;
 }
-
 .tableWrapper::-webkit-scrollbar-thumb {
   background-color: #cbd5e1;
   border-radius: 10px;
 }
 
-/* ✅ Table Styles */
+/* Table */
 .tableWrapper table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 900px; /* Forces horizontal scroll if smaller screen */
+  min-width: 900px; /* Forces horizontal scroll */
   color: #000;
-  white-space: nowrap; /* Prevents text wrapping */
+  white-space: nowrap;
 }
 
 .tableWrapper th,
@@ -162,13 +172,42 @@
 .tableWrapper th {
   background-color: #e3f2fd;
   font-weight: 600;
-}
-
-/* Optional: sticky header */
-.tableWrapper th {
   position: sticky;
   top: 0;
   z-index: 2;
+}
+
+/* Center Edit/Delete columns */
+.tableWrapper table td:nth-child(6),
+.tableWrapper table td:nth-child(7),
+.tableWrapper table th:nth-child(6),
+.tableWrapper table th:nth-child(7) {
+  text-align: center;
+}
+
+/* ======================= ACTION BUTTONS ======================= */
+.editButton {
+  background-color: #0eb04c;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.editButton:hover {
+  background-color: #0a8e3b;
+}
+
+.deleteButton {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.deleteButton:hover {
+  background-color: #cc0000;
 }
 
 /* ======================= BOTTOM BUTTONS ======================= */
@@ -179,19 +218,13 @@
   margin-top: 15px;
 }
 
-.pdfButton,
-.backButton {
+.pdfButton {
+  background: #0eb04c;
   padding: 10px 20px;
   border-radius: 6px;
   color: #fff;
-  font-weight: 500;
-  cursor: pointer;
   border: none;
-  transition: 0.2s ease;
-}
-
-.pdfButton {
-  background: #0eb04c;
+  cursor: pointer;
 }
 .pdfButton:hover {
   background: #0a8e3b;
@@ -199,12 +232,17 @@
 
 .backButton {
   background: #111827;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 .backButton:hover {
   background: #1f2937;
 }
 
-/* ======================= TOAST MESSAGE ======================= */
+/* ======================= TOAST ======================= */
 .toast {
   background: #fff8e1;
   border: 1px solid #0eb04c;
@@ -212,5 +250,4 @@
   border-radius: 6px;
   color: #333;
   font-weight: 500;
-  margin-bottom: 10px;
 }

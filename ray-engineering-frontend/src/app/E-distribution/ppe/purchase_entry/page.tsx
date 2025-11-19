@@ -36,7 +36,9 @@ export default function PurchasePage() {
 
   // ---------------------- States ----------------------
   const [partyName, setPartyName] = useState("");
-  const [partyNames, setPartyNames] = useState<{ id: string; name: string }[]>([]);
+  const [partyNames, setPartyNames] = useState<{ id: string; name: string }[]>(
+    []
+  );
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
   const [items, setItems] = useState<Item[]>([]);
@@ -105,7 +107,11 @@ export default function PurchasePage() {
   }, [activeTab]);
 
   // ---------------------- Item Handling ----------------------
-  const handleItemChange = (index: number, field: keyof Item, value: string | number) => {
+  const handleItemChange = (
+    index: number,
+    field: keyof Item,
+    value: string | number
+  ) => {
     const updated = [...items];
     if (field === "itemName") {
       const selected = savedItems.find((s) => s.itemName === value);
@@ -122,12 +128,18 @@ export default function PurchasePage() {
     setItems(updated);
   };
 
-  const addItem = () => setItems([...items, { itemName: "", qty: "", unit: "", rate: "", amount: 0 }]);
-  const removeItem = (index: number) => setItems(items.filter((_, i) => i !== index));
+  const addItem = () =>
+    setItems([
+      ...items,
+      { itemName: "", qty: "", unit: "", rate: "", amount: 0 },
+    ]);
+  const removeItem = (index: number) =>
+    setItems(items.filter((_, i) => i !== index));
 
   // ---------------------- Totals ----------------------
   const totalInvoice = items.reduce((sum, i) => sum + (i.amount || 0), 0);
-  const gstAmount = totalInvoice * 0.18;
+  const [gstPercent, setGstPercent] = useState(0);
+  const gstAmount = (totalInvoice * gstPercent) / 100;
   const grandTotal = totalInvoice + gstAmount;
 
   // ---------------------- Save / Update ----------------------
@@ -137,7 +149,13 @@ export default function PurchasePage() {
       return;
     }
 
-    const payload = { partyName, invoiceNumber, invoiceDate, items, total: grandTotal };
+    const payload = {
+      partyName,
+      invoiceNumber,
+      invoiceDate,
+      items,
+      total: grandTotal,
+    };
 
     try {
       if (editingId) {
@@ -170,6 +188,25 @@ export default function PurchasePage() {
     showMessage("✏️ Editing existing record");
   };
 
+  // ---------------------- Delete ----------------------
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) {
+      showMessage("❌ Invalid record ID");
+      return;
+    }
+    if (!confirm("Are you sure you want to delete this record?")) {
+      return;
+    }
+    try {
+      await api.delete(`/api/purchases/${id}`);
+      showMessage("✅ Purchase deleted successfully");
+      fetchPurchases();
+    } catch (err) {
+      console.error("Delete error:", err);
+      showMessage("❌ Failed to delete record");
+    }
+  };
+
   // ---------------------- PDF Exports ----------------------
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -198,18 +235,30 @@ export default function PurchasePage() {
     autoTable(doc, {
       startY: 25,
       head: [["Item", "Qty", "Unit", "Rate", "Amount"]],
-      body: items.map((i) => [i.itemName, i.qty, i.unit, i.rate, i.amount.toFixed(2)]),
+      body: items.map((i) => [
+        i.itemName,
+        i.qty,
+        i.unit,
+        i.rate,
+        i.amount.toFixed(2),
+      ]),
     });
     doc.save(`Invoice_${invoiceNumber}.pdf`);
   };
 
   // ---------------------- Filter ----------------------
   const filteredPurchases = purchases.filter((p) => {
-    const partyMatch = p.partyName.toLowerCase().includes(filter.party.toLowerCase());
+    const partyMatch = p.partyName
+      .toLowerCase()
+      .includes(filter.party.toLowerCase());
     const fromDate = filter.from ? new Date(filter.from) : null;
     const toDate = filter.to ? new Date(filter.to) : null;
     const date = new Date(p.invoiceDate);
-    return partyMatch && (!fromDate || date >= fromDate) && (!toDate || date <= toDate);
+    return (
+      partyMatch &&
+      (!fromDate || date >= fromDate) &&
+      (!toDate || date <= toDate)
+    );
   });
 
   // ---------------------- JSX ----------------------
@@ -222,13 +271,17 @@ export default function PurchasePage() {
         {/* Tabs */}
         <div className={styles.tabButtons}>
           <button
-            className={`${styles.tabButton} ${activeTab === "entry" ? styles.tabButtonActive : ""}`}
+            className={`${styles.tabButton} ${
+              activeTab === "entry" ? styles.tabButtonActive : ""
+            }`}
             onClick={() => setActiveTab("entry")}
           >
             Entry Form
           </button>
           <button
-            className={`${styles.tabButton} ${activeTab === "report" ? styles.tabButtonActive : ""}`}
+            className={`${styles.tabButton} ${
+              activeTab === "report" ? styles.tabButtonActive : ""
+            }`}
             onClick={() => setActiveTab("report")}
           >
             Purchase Report
@@ -241,7 +294,10 @@ export default function PurchasePage() {
             <div className={styles.formSection}>
               <div className={styles.formGroup}>
                 <label>Party Name</label>
-                <select value={partyName} onChange={(e) => setPartyName(e.target.value)}>
+                <select
+                  value={partyName}
+                  onChange={(e) => setPartyName(e.target.value)}
+                >
                   <option value="">-- Select Party --</option>
                   {partyNames.map((p) => (
                     <option key={p.id} value={p.name}>
@@ -296,7 +352,9 @@ export default function PurchasePage() {
                         <td>
                           <select
                             value={item.itemName}
-                            onChange={(e) => handleItemChange(i, "itemName", e.target.value)}
+                            onChange={(e) =>
+                              handleItemChange(i, "itemName", e.target.value)
+                            }
                           >
                             <option value="">Select Item</option>
                             {savedItems.map((si, idx) => (
@@ -310,7 +368,9 @@ export default function PurchasePage() {
                           <input
                             type="number"
                             value={item.qty}
-                            onChange={(e) => handleItemChange(i, "qty", e.target.value)}
+                            onChange={(e) =>
+                              handleItemChange(i, "qty", e.target.value)
+                            }
                           />
                         </td>
                         <td>
@@ -320,12 +380,19 @@ export default function PurchasePage() {
                           <input
                             type="number"
                             value={item.rate}
-                            onChange={(e) => handleItemChange(i, "rate", e.target.value)}
+                            onChange={(e) =>
+                              handleItemChange(i, "rate", e.target.value)
+                            }
                           />
                         </td>
-                        <td className={styles.amountCell}>₹{item.amount.toFixed(2)}</td>
+                        <td className={styles.amountCell}>
+                          ₹{item.amount.toFixed(2)}
+                        </td>
                         <td>
-                          <button className={styles.deleteButton} onClick={() => removeItem(i)}>
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => removeItem(i)}
+                          >
                             Delete
                           </button>
                         </td>
@@ -342,8 +409,26 @@ export default function PurchasePage() {
 
             <div className={styles.totalBar}>
               <span>Subtotal: ₹{totalInvoice.toFixed(2)}</span>
-              <span>GST (18%): ₹{gstAmount.toFixed(2)}</span>
-              <span className={styles.totalAmount}>Total: ₹{grandTotal.toFixed(2)}</span>
+
+              <span>
+                GST (%):
+                <input
+                  type="number"
+                  value={gstPercent}
+                  onChange={(e) => setGstPercent(Number(e.target.value))}
+                  style={{
+                    width: "60px",
+                    marginLeft: "8px",
+                    padding: "4px",
+                  }}
+                />
+              </span>
+
+              <span>GST Amount: ₹{gstAmount.toFixed(2)}</span>
+
+              <span className={styles.totalAmount}>
+                Total: ₹{grandTotal.toFixed(2)}
+              </span>
             </div>
 
             <div className={styles.bottomButtons}>
@@ -366,7 +451,9 @@ export default function PurchasePage() {
                 type="text"
                 placeholder="Search Party Name"
                 value={filter.party}
-                onChange={(e) => setFilter({ ...filter, party: e.target.value })}
+                onChange={(e) =>
+                  setFilter({ ...filter, party: e.target.value })
+                }
               />
               <input
                 type="date"
@@ -393,6 +480,7 @@ export default function PurchasePage() {
                     <th>Items</th>
                     <th>Total (₹)</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -409,10 +497,23 @@ export default function PurchasePage() {
                         <td>{p.invoiceNumber}</td>
                         <td>{p.invoiceDate}</td>
                         <td>{p.items.map((i) => i.itemName).join(", ")}</td>
-                        <td className={styles.amountCell}>₹{p.total.toFixed(2)}</td>
+                        <td className={styles.amountCell}>
+                          ₹{p.total.toFixed(2)}
+                        </td>
                         <td>
-                          <button className={styles.addButton} onClick={() => handleEdit(p)}>
+                          <button
+                            className={styles.addButton}
+                            onClick={() => handleEdit(p)}
+                          >
                             Edit
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => handleDelete(p._id)}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>

@@ -113,7 +113,10 @@ export default function StockReportPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={5} style={{ textAlign: "center", padding: "1rem" }}>
+                <td
+                  colSpan={5}
+                  style={{ textAlign: "center", padding: "1rem" }}
+                >
                   Loading stock...
                 </td>
               </tr>
@@ -127,7 +130,11 @@ export default function StockReportPage() {
                   <td
                     style={{
                       color:
-                        s.qty > 10 ? "#22c55e" : s.qty > 0 ? "#f59e0b" : "#ef4444",
+                        s.qty > 10
+                          ? "#22c55e"
+                          : s.qty > 0
+                          ? "#f59e0b"
+                          : "#ef4444",
                       fontWeight: 600,
                     }}
                   >
@@ -137,7 +144,10 @@ export default function StockReportPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={5} style={{ textAlign: "center", padding: "1rem" }}>
+                <td
+                  colSpan={5}
+                  style={{ textAlign: "center", padding: "1rem" }}
+                >
                   No stock records found.
                 </td>
               </tr>

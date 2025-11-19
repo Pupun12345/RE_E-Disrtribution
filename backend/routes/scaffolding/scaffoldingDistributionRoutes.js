@@ -60,15 +60,30 @@ router.put("/:id", async (req, res) => {
 // ✅ DELETE distribution
 router.delete("/:id", async (req, res) => {
   try {
-    const deleted = await ScaffoldingDistribution.findByIdAndDelete(req.params.id);
-    if (!deleted) {
+    const record = await ScaffoldingDistribution.findById(req.params.id);
+
+    if (!record) {
       return res.status(404).json({ success: false, message: "Record not found" });
     }
-    res.json({ success: true, message: "Record deleted successfully" });
+
+    // restore stock
+    const Stock = require("../../models/scaffolding/ScaffoldingStock");
+
+    await Stock.findOneAndUpdate(
+      { itemName: record.itemName },
+      { $inc: { qty: record.issuedQuantity } }
+    );
+
+    // delete record
+    await record.deleteOne();
+
+    res.json({ success: true, message: "Record deleted & stock updated" });
+
   } catch (err) {
     console.error("Error deleting distribution:", err);
     res.status(500).json({ success: false, message: "Failed to delete record" });
   }
 });
+
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ScaffoldingPurchase = require("../../models/scaffolding/ScaffoldingPurchase");
+const ScaffoldingStock = require("../../models/scaffolding/ScaffoldingStock");
 
 // ===============================
 // 📦 GET all purchases
@@ -78,18 +79,36 @@ router.put("/:id", async (req, res) => {
 // ===============================
 router.delete("/:id", async (req, res) => {
   try {
-    const deleted = await ScaffoldingPurchase.findByIdAndDelete(req.params.id);
+    const purchase = await ScaffoldingPurchase.findById(req.params.id);
 
-    if (!deleted) {
+    if (!purchase) {
       return res.status(404).json({ success: false, message: "Purchase not found" });
     }
 
-    res.status(200).json({ success: true, message: "Purchase deleted successfully" });
+    // 1️⃣ Reduce stock because purchases ADD stock
+    for (const item of purchase.items) {
+      const stockItem = await ScaffoldingStock.findOne({ itemName: item.itemName });
+
+      if (stockItem) {
+        stockItem.qty -= Number(item.qty);
+        if (stockItem.qty < 0) stockItem.qty = 0; // prevent negative stock
+        await stockItem.save();
+      }
+    }
+
+    // 2️⃣ Delete purchase record
+    await purchase.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      message: "Purchase deleted and stock updated",
+    });
   } catch (err) {
-    console.error("Error deleting scaffolding purchase:", err);
-    res
-      .status(500)
-      .json({ success: false, message: "Server error deleting scaffolding purchase" });
+    console.error("Error deleting purchase:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error deleting purchase",
+    });
   }
 });
 

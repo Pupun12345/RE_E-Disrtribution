@@ -192,6 +192,36 @@ export default function DistributionPage() {
     }
   };
 
+  // ====================== DELETE RECORD ======================
+  const handleDelete = async (
+    id: string,
+    itemName: string,
+    quantity: number
+  ) => {
+    if (!confirm("Are you sure you want to delete this record?")) return;
+    try {
+      const res = await api.delete(`/api/distribution/${id}`);
+      if (res && res.success) {
+        // remove record from list
+        setRecords((prev) => prev.filter((r) => r._id !== id));
+        // restore stock for the item
+        setStock((prev) =>
+          prev.map((s) =>
+            s.itemName === itemName
+              ? { ...s, qty: s.qty + Number(quantity) }
+              : s
+          )
+        );
+        alert("✅ Record deleted successfully!");
+      } else {
+        alert("❌ Failed to delete record!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error deleting record!");
+    }
+  };
+
   // ====================== FILTER LOGIC ======================
   const filteredRecords = records.filter((r) => {
     const searchMatch =
@@ -360,6 +390,7 @@ export default function DistributionPage() {
                   <th>Issued To</th>
                   <th>Location</th>
                   <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -377,7 +408,25 @@ export default function DistributionPage() {
                           onClick={() => setEditRecord(r)}
                           className={styles.editButton}
                         >
-                          ✏️ Edit
+                           Edit
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleDelete(r._id, r.itemName, r.quantity)
+                          }
+                          className={styles.deleteButton}
+                          style={{
+                            background: "#ff4d4d",
+                            padding: "5px 10px",
+                            borderRadius: "6px",
+                            color: "white",
+                            cursor: "pointer",
+                            border: "none",
+                          }}
+                        >
+                          Delete
                         </button>
                       </td>
                     </tr>
