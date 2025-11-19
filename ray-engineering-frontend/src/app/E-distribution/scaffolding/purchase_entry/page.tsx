@@ -582,3 +582,4 @@ export default function PurchasePage() {
     </div>
   );
 }
+//updated delete button

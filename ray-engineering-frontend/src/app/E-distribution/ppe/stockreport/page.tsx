@@ -166,3 +166,4 @@ export default function StockReportPage() {
     </div>
   );
 }
+//updated delete button

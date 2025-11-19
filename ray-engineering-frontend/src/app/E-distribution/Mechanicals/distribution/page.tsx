@@ -504,3 +504,4 @@ export default function DistributionPage() {
     </div>
   );
 }
+//updated delete button
