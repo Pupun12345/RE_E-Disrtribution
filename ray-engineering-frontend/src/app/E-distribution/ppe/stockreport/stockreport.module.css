@@ -48,7 +48,7 @@
 
 /* PDF Button */
 .pdfBtn {
-  background: #007bff;
+  background: #07b020;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -58,7 +58,7 @@
 }
 
 .pdfBtn:hover {
-  background: #005ecb;
+  background: #00cb5b;
 }
 
 /* Table Wrapper with Horizontal & Vertical Scroll */
@@ -155,3 +155,16 @@
   }
 }
 /* updated delete button */
+.csvBtn {
+  background-color: #ffa30e;
+  color: rgb(255, 255, 255);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.csvBtn:hover {
+  background-color: #e39836;
+}
+

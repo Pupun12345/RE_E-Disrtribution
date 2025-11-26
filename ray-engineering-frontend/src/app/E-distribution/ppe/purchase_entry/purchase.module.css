@@ -345,3 +345,15 @@
   margin: 0 auto;
 }
 /* updated delete button */
+.csvButton {
+  background-color: #ffa30e;
+  color: rgb(255, 255, 255);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.csvButton:hover {
+  background-color: #e39836;
+}

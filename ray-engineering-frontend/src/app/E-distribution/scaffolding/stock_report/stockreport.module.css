@@ -154,3 +154,16 @@
     font-size: 13px;
   }
 }
+.csvBtn {
+  background-color: #ffa30e;
+  color: rgb(255, 255, 255);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.csvBtn:hover {
+  background-color: #e39836;
+}

@@ -60,6 +60,53 @@ export default function StockReportPage() {
     if (qty > 0) return "Low Stock";
     return "Out of Stock";
   };
+  const exportCSV = () => {
+    // CSV headers
+    const headers = [
+      "Item Name",
+      "PUW (Per Unit Weight)",
+      "Unit",
+      "Quantity",
+      "Status",
+    ];
+
+    // Escape helper
+    const safe = (value: any) => {
+      const str = String(value ?? "");
+      if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
+    };
+
+    // Prepare rows
+    const rows = filteredStocks.map((s) => [
+      s.itemName || "",
+      s.puw?.toFixed(2) || "0.00", // ✅ Added PUW safely
+      s.unit || "-",
+      s.qty?.toString() || "0",
+      s.qty > 10 ? "In Stock" : s.qty > 0 ? "Low Stock" : "Out of Stock",
+    ]);
+
+    // Build CSV text
+    const csvContent = [headers, ...rows]
+      .map((line) => line.map(safe).join(","))
+      .join("\n");
+
+    // Trigger download
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.setAttribute("download", "stock_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // ✅ PDF Export
   const generatePDF = () => {
@@ -95,7 +142,14 @@ export default function StockReportPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button onClick={generatePDF} className={styles.pdfBtn}>
-          📄 Export PDF
+          Export PDF
+        </button>
+        <button
+          onClick={exportCSV}
+          className={styles.csvBtn}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Export CSV
         </button>
       </div>
 
@@ -157,7 +211,7 @@ export default function StockReportPage() {
       </div>
 
       <button className={styles.backButton} onClick={handleBack}>
-        ⬅ Go Back
+        Go Back
       </button>
     </div>
   );

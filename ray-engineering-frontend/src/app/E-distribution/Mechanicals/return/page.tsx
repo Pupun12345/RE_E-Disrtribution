@@ -173,6 +173,62 @@ export default function ReturnPage() {
       showMessage("❌ Failed to delete record");
     }
   };
+  const exportCSV = () => {
+    // Prepare CSV headers
+    const headers = [
+      "Item Name",
+      "Qty",
+      "Unit",
+      "Return Date",
+      "Person Name",
+      "Location / Site",
+    ];
+
+    // Flatten the filtered records into CSV rows
+    const rows = filteredRecords.flatMap((record) =>
+      record.items.map((item) => [
+        item.itemName,
+        item.qty,
+        item.unit,
+        item.returnDate,
+        item.personName,
+        item.location,
+      ])
+    );
+
+    // Build CSV content
+    let csvContent = "";
+    csvContent += headers.join(",") + "\n";
+
+    rows.forEach((row) => {
+      // Escape commas and quotes in data
+      const escapedRow = row.map((field) => {
+        if (
+          typeof field === "string" &&
+          (field.includes(",") || field.includes('"'))
+        ) {
+          return `"${field.replace(/"/g, '""')}"`; // double quotes inside quotes
+        }
+        return field;
+      });
+      csvContent += escapedRow.join(",") + "\n";
+    });
+
+    // Create a Blob from the CSV content
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+    // Create a link and trigger download
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "mechanical_return_report.csv");
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -305,7 +361,7 @@ export default function ReturnPage() {
 
             <div className={styles.bottomButtons}>
               <button className={styles.saveButton} onClick={handleSave}>
-                💾 {editingId ? "Update Return" : "Save Return"}
+                {editingId ? "Update Return" : "Save Return"}
               </button>
             </div>
           </div>
@@ -374,7 +430,21 @@ export default function ReturnPage() {
                   cursor: "pointer",
                 }}
               >
-                📄 Download Report
+                Download Report
+              </button>
+              <button
+                onClick={exportCSV}
+                style={{
+                  backgroundColor: "#FACC15", // ✅ Yellow like your screenshot
+                  color: "#1a1a1a",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "10px 20px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                Export CSV
               </button>
             </div>
 

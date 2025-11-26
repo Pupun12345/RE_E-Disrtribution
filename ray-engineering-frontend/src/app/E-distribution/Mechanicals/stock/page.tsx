@@ -49,6 +49,27 @@ export default function StockReportPage() {
   const filteredStocks = stocks.filter((s) =>
     s.itemName.toLowerCase().includes(search.toLowerCase())
   );
+  const exportCSV = () => {
+    const headers = ["Item Name", "Quantity", "Unit", "Status"];
+    const rows = filteredStocks.map((s) => [
+      s.itemName,
+      s.qty.toString(),
+      s.unit || "-",
+      s.qty > 10 ? "In Stock" : s.qty > 0 ? "Low Stock" : "Out of Stock",
+    ]);
+    const csvContent = [headers, ...rows]
+      .map((e) => e.map((v) => `"${v.replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.setAttribute("download", "stock_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // ✅ PDF export
   const generatePDF = () => {
@@ -79,7 +100,14 @@ export default function StockReportPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button onClick={generatePDF} className={styles.pdfBtn}>
-          📄 Export PDF
+          Export PDF
+        </button>
+        <button
+          onClick={exportCSV}
+          className={styles.csvBtn}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Export CSV
         </button>
       </div>
 
@@ -96,7 +124,10 @@ export default function StockReportPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={4} style={{ textAlign: "center", padding: "1rem" }}>
+                <td
+                  colSpan={4}
+                  style={{ textAlign: "center", padding: "1rem" }}
+                >
                   Loading stock...
                 </td>
               </tr>
@@ -109,7 +140,11 @@ export default function StockReportPage() {
                   <td
                     style={{
                       color:
-                        s.qty > 10 ? "#22c55e" : s.qty > 0 ? "#f59e0b" : "#ef4444",
+                        s.qty > 10
+                          ? "#22c55e"
+                          : s.qty > 0
+                          ? "#f59e0b"
+                          : "#ef4444",
                       fontWeight: 600,
                     }}
                   >
@@ -123,7 +158,10 @@ export default function StockReportPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={4} style={{ textAlign: "center", padding: "1rem" }}>
+                <td
+                  colSpan={4}
+                  style={{ textAlign: "center", padding: "1rem" }}
+                >
                   No stock data available.
                 </td>
               </tr>
@@ -133,7 +171,7 @@ export default function StockReportPage() {
       </div>
 
       <button className={styles.backButton} onClick={() => router.back()}>
-        ⬅ Go Back
+        Go Back
       </button>
     </div>
   );

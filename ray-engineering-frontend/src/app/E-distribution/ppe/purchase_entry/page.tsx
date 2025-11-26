@@ -206,6 +206,37 @@ export default function PurchasePage() {
       showMessage("❌ Failed to delete record");
     }
   };
+  const exportCSV = () => {
+  const headers = [
+    "Party Name",
+    "Invoice Number",
+    "Invoice Date",
+    "Items",
+    "Total (₹)",
+  ];
+  const rows = filteredPurchases.map((p) => [
+    p.partyName,
+    p.invoiceNumber,
+    p.invoiceDate,
+    p.items.map((i) => i.itemName).join(", "),
+    p.total.toFixed(2),
+  ]);
+
+  const csvString = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+  
+  // Create Blob with UTF-8 BOM
+  const blob = new Blob(["\uFEFF" + csvString], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "Purchase_Report.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 
   // ---------------------- PDF Exports ----------------------
   const exportPDF = () => {
@@ -466,7 +497,10 @@ export default function PurchasePage() {
                 onChange={(e) => setFilter({ ...filter, to: e.target.value })}
               />
               <button className={styles.pdfButton} onClick={exportPDF}>
-                📄 Download PDF
+                Download PDF
+              </button>
+              <button className={styles.csvButton} onClick={exportCSV}>
+                Export CSV
               </button>
             </div>
 

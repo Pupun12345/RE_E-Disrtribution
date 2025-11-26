@@ -6,7 +6,7 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("./models/User");
+const User = require("./models/user");
 const Vendor = require("./models/Vendor");
 const auth = require("./middleware/auth");
 const purchaseRoutes = require("./routes/ppe/purchaseRoutes");

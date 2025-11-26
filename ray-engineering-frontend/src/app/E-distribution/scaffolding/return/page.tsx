@@ -41,6 +41,10 @@ interface ReturnRecord {
 export default function ReturnPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("entry");
+  const [search, setSearch] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
   const [formData, setFormData] = useState<ReturnItem>({
     woNumber: "",
     location: "",
@@ -182,6 +186,23 @@ export default function ReturnPage() {
     setEditingId(record._id || null);
     showMessage("✏️ Editing existing record");
   };
+  // ================= FILTER LOGIC =================
+  const filteredRecords = returnRecords.filter((r) => {
+    const matchesSearch =
+      r.itemName.toLowerCase().includes(search.toLowerCase()) ||
+      r.personName.toLowerCase().includes(search.toLowerCase()) ||
+      r.location.toLowerCase().includes(search.toLowerCase());
+
+    const recordDate = r.returnDate
+      ? new Date(r.returnDate).toISOString().split("T")[0]
+      : "";
+
+    const matchesFromDate = fromDate ? recordDate >= fromDate : true;
+    const matchesToDate = toDate ? recordDate <= toDate : true;
+
+    return matchesSearch && matchesFromDate && matchesToDate;
+  });
+
   const handleDelete = async (record: ReturnRecord) => {
     const formattedDate = record.returnDate
       ? new Date(record.returnDate).toISOString().split("T")[0]
@@ -206,6 +227,36 @@ export default function ReturnPage() {
       console.error(err);
       showMessage("❌ Error deleting return");
     }
+  };
+  const exportCSV = () => {
+    const headers = [
+      "W/O No,Location,TSL Manager,Return Date,Item,Unit,Unit Wt,Return Qty,Return Wt",
+    ];
+
+    const rows = returnRecords.map((r) => [
+      r.woNumber,
+      r.location,
+      r.personName,
+      r.returnDate ? new Date(r.returnDate).toLocaleDateString() : "",
+      r.itemName,
+      r.unit,
+      r.unitWeight,
+      r.returnQuantity,
+      r.returnWeight,
+    ]);
+
+    let csvContent = headers.join("\n") + "\n";
+
+    rows.forEach((row) => {
+      csvContent += row.join(",") + "\n";
+    });
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Return_Report.csv");
+    link.click();
   };
 
   const exportPDF = () => {
@@ -328,6 +379,38 @@ export default function ReturnPage() {
 
         {activeTab === "report" && (
           <>
+            <div className={styles.filterBar}>
+              <input
+                type="text"
+                placeholder="🔍Item / Person / Location"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className={styles.filterInput}
+              />
+
+              <input
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+                className={styles.filterInput}
+              />
+
+              <input
+                type="date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+                className={styles.filterInput}
+              />
+
+              <button className={styles.pdfButton} onClick={exportPDF}>
+                Download Report
+              </button>
+
+              <button className={styles.csvButton} onClick={exportCSV}>
+                Export CSV
+              </button>
+            </div>
+
             <div className={styles.tableWrapper}>
               <table>
                 <thead>
@@ -346,14 +429,14 @@ export default function ReturnPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {returnRecords.length === 0 ? (
+                  {filteredRecords.length === 0 ? (
                     <tr>
                       <td colSpan={10} style={{ textAlign: "center" }}>
                         No Records Found
                       </td>
                     </tr>
                   ) : (
-                    returnRecords.map((r) => (
+                    filteredRecords.map((r) => (
                       <tr key={r._id}>
                         <td>{r.woNumber}</td>
                         <td>{r.location}</td>
@@ -392,9 +475,6 @@ export default function ReturnPage() {
             </div>
 
             <div className={styles.bottomButtons}>
-              <button className={styles.pdfButton} onClick={exportPDF}>
-                📄 Download Report
-              </button>
               <button
                 className={styles.backButton}
                 onClick={() => router.back()}

@@ -48,7 +48,7 @@
 
 /* PDF Button */
 .pdfBtn {
-  background: #007bff;
+  background: #07b020;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -58,20 +58,26 @@
 }
 
 .pdfBtn:hover {
-  background: #005ecb;
+  background: #00cb5b;
 }
 
 /* Table Wrapper with Horizontal & Vertical Scroll */
 .tableWrapper {
   width: 100%;
-  max-width: 100%; /* allow full width for horizontal scroll */
-  overflow-x: auto; /* horizontal scroll if table too wide */
-  overflow-y: auto; /* vertical scroll if table too tall */
-  max-height: 55vh; /* scrollable table height */
+  max-width: 100%;
+  max-height: 70vh; /* or adjust height */
+  overflow-x: auto; /* horizontal scroll if needed */
+  overflow-y: auto; /* vertical scroll if needed */
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 15px;
+
+  /* To avoid scrollbars overlapping or hiding each other */
+  /* Add some padding at bottom/right for scrollbars if needed */
+  padding-bottom: 10px;
+  padding-right: 10px;
 }
 
 /* Scrollbar */
@@ -92,9 +98,10 @@
 /* Table Styling */
 .tableWrapper table {
   width: 100%;
-  min-width: 700px; /* ensures horizontal scroll if viewport smaller than table */
+  min-width: 700px; /* keep horizontal scroll if table wider than container */
   border-collapse: collapse;
   font-size: 14px;
+  /* table-layout: auto is default and good for flexible width */
 }
 
 .tableWrapper th,
@@ -110,7 +117,8 @@
   font-weight: 600;
   position: sticky; /* Keep headers visible */
   top: 0;
-  z-index: 1;
+  z-index: 10;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* subtle shadow for header */
 }
 
 /* Back Button Below Table */
@@ -153,4 +161,19 @@
   .tableWrapper table {
     font-size: 13px;
   }
+}
+
+/* CSV Button */
+.csvBtn {
+  background-color: #ffa30e;
+  color: rgb(255, 255, 255);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.csvBtn:hover {
+  background-color: #e39836;
 }

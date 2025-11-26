@@ -219,7 +219,7 @@
 }
 
 .pdfButton {
-  background: #0eb04c;
+  background: #e60000;
   padding: 10px 20px;
   border-radius: 6px;
   color: #fff;
@@ -227,7 +227,7 @@
   cursor: pointer;
 }
 .pdfButton:hover {
-  background: #0a8e3b;
+  background: #ba0a0a;
 }
 
 .backButton {
@@ -252,3 +252,32 @@
   font-weight: 500;
 }
 /* updated delete button */
+.filterBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filterInput {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  min-width: 180px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.csvButton {
+  background: #facc15;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.csvButton:hover {
+  opacity: 0.85;
+}
