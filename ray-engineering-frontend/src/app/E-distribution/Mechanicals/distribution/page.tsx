@@ -231,22 +231,111 @@ export default function DistributionPage() {
 
   // ====================== EXPORT ======================
   const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Mechanical Distribution Report", 14, 15);
-    autoTable(doc, {
-      startY: 25,
-      head: [["Item", "Qty", "Unit", "Date", "Person", "Location"]],
-      body: filteredRecords.map((r) => [
-        r.itemName,
-        r.quantity,
-        r.unit,
-        r.issueDate,
-        r.personName,
-        r.location,
-      ]),
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+
+  // ------------------------------------------
+  // HEADER (Every Page)
+  // ------------------------------------------
+  const addHeader = () => {
+    // Logo
+    doc.addImage("/ray-log.png", "PNG", 15, 10, 18, 18);
+
+    // Title (Company)
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("RAY ENGINEERING", 50, 15);
+
+    // Sub-title
+    doc.setFontSize(10);
+    doc.text("Contact No: 9337670266", 50, 22);
+    doc.text("E-Mail: accounts@rayengineering.co", 50, 28);
+
+    // Divider
+    doc.setLineWidth(0.5);
+    doc.line(10, 40, 200, 40);
+
+    // Report Title
+    doc.setFontSize(16);
+    doc.text("MECHANICAL DISTRIBUTION REPORT", pageWidth / 2, 55, {
+      align: "center",
     });
-    doc.save("Mechanical_Distribution_Report.pdf");
   };
+
+  // ------------------------------------------
+  // FOOTER (Every Page)
+  // ------------------------------------------
+  const addFooter = (pageNum: number, totalPages: number) => {
+    const footerY = pageHeight - 40;
+
+    doc.line(10, footerY, 200, footerY);
+    doc.setFontSize(9);
+
+    doc.text(
+      "Registrations:\nGSTIN: 21AIJHPR1040H1ZO\nUDYAM: DO-12-0001261\nState: Odisha (Code: 21)",
+      10,
+      footerY + 8
+    );
+
+    doc.text(
+      "Registered Address:\nAt- Gandakipur, Po- Gopiakuda,\nPs- Kujanga, Dist- Jagatsinghpur",
+      75,
+      footerY + 8
+    );
+
+    doc.text(
+      `Contact & Web:\nMD Email: md@rayengineering.co\nWebsite: rayengineering.co\nPage ${pageNum} / ${totalPages}`,
+      150,
+      footerY + 8
+    );
+  };
+
+  // First page header
+  addHeader();
+
+  // ------------------------------------------
+  // TABLE (Multi-page with header repeat)
+  // ------------------------------------------
+  autoTable(doc, {
+    startY: 65,
+    margin: { top: 60, bottom: 50 },
+
+    head: [["Item", "Qty", "Unit", "Date", "Person", "Location"]],
+
+    body: filteredRecords.map((r) => [
+      r.itemName,
+      r.quantity,
+      r.unit,
+      r.issueDate,
+      r.personName,
+      r.location,
+    ]),
+
+    styles: { fontSize: 10, halign: "center", cellPadding: 3 },
+    headStyles: { fillColor: [41, 128, 185], textColor: "#fff" },
+    theme: "grid",
+
+    didDrawPage: () => {
+      addHeader(); // Only header here
+    },
+  });
+
+  // ------------------------------------------
+  // ADD FOOTERS AFTER PAGES ARE COMPLETE
+  // ------------------------------------------
+  const totalPages = doc.getNumberOfPages();
+
+  for (let p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    addFooter(p, totalPages);
+  }
+
+  // Save PDF
+  doc.save("Mechanical_Distribution_Report.pdf");
+};
+
 
   const exportCSV = () => {
     const headers = ["Item", "Quantity", "Unit", "Date", "Person", "Location"];

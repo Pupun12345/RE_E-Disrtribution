@@ -207,44 +207,105 @@ export default function PurchasePage() {
     }
   };
   const exportCSV = () => {
-  const headers = [
-    "Party Name",
-    "Invoice Number",
-    "Invoice Date",
-    "Items",
-    "Total (₹)",
-  ];
-  const rows = filteredPurchases.map((p) => [
-    p.partyName,
-    p.invoiceNumber,
-    p.invoiceDate,
-    p.items.map((i) => i.itemName).join(", "),
-    p.total.toFixed(2),
-  ]);
+    const headers = [
+      "Party Name",
+      "Invoice Number",
+      "Invoice Date",
+      "Items",
+      "Total (₹)",
+    ];
+    const rows = filteredPurchases.map((p) => [
+      p.partyName,
+      p.invoiceNumber,
+      p.invoiceDate,
+      p.items.map((i) => i.itemName).join(", "),
+      p.total.toFixed(2),
+    ]);
 
-  const csvString = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
-  
-  // Create Blob with UTF-8 BOM
-  const blob = new Blob(["\uFEFF" + csvString], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "Purchase_Report.csv";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-};
+    const csvString = [headers.join(","), ...rows.map((r) => r.join(","))].join(
+      "\n"
+    );
 
+    // Create Blob with UTF-8 BOM
+    const blob = new Blob(["\uFEFF" + csvString], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Purchase_Report.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // ---------------------- PDF Exports ----------------------
   const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Purchase Report", 14, 16);
+    const doc = new jsPDF("p", "mm", "a4");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // -----------------------------
+    // HEADER FUNCTION
+    //------------------------------
+    const addHeader = () => {
+      doc.addImage("/ray-log.png", "PNG", 15, 10, 18, 18);
+
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("RAY ENGINEERING", 50, 15);
+
+      doc.setFontSize(10);
+      doc.text("Purchase Report", 50, 22);
+      doc.text("E-Mail: accounts@rayengineering.co", 50, 28);
+
+      doc.setLineWidth(0.5);
+      doc.line(10, 40, 200, 40);
+
+      doc.setFontSize(16);
+      doc.text("PURCHASE REPORT", pageWidth / 2, 55, { align: "center" });
+    };
+
+    // -----------------------------
+    // FOOTER FUNCTION
+    //------------------------------
+    const addFooter = (pageNum: number, totalPages: number) => {
+      const footerY = pageHeight - 40;
+
+      doc.line(10, footerY, 200, footerY);
+      doc.setFontSize(9);
+
+      doc.text(
+        "Registrations:\nGSTIN: 21AIJHPR1040H1ZO\nUDYAM: DO-12-0001261\nState: Odisha (Code: 21)",
+        10,
+        footerY + 8
+      );
+
+      doc.text(
+        "Registered Address:\nAt- Gandakipur, Po- Gopiakuda,\nPs- Kujanga, Dist- Jagatsinghpur",
+        75,
+        footerY + 8
+      );
+
+      doc.text(
+        `Contact & Web:\nMD Email: md@rayengineering.co\nWebsite: rayengineering.co\nPage ${pageNum} / ${totalPages}`,
+        150,
+        footerY + 8
+      );
+    };
+
+    // Draw first header
+    addHeader();
+
+    // -----------------------------
+    // AUTO TABLE (Report Table)
+    //-----------------------------
     autoTable(doc, {
-      startY: 25,
-      head: [["Party", "Invoice No", "Date", "Items", "Total (₹)"]],
+      startY: 90,
+      margin: { top: 90, bottom: 50 },
+      head: [["Party", "Invoice No", "Date", "Items", "Total"]],
       body: purchases.map((p) => [
         p.partyName,
         p.invoiceNumber,
@@ -252,7 +313,26 @@ export default function PurchasePage() {
         p.items.map((i) => i.itemName).join(", "),
         p.total.toFixed(2),
       ]),
+      styles: { fontSize: 10, cellPadding: 3 },
+      headStyles: { fillColor: [41, 128, 185], textColor: "#fff" },
+      theme: "grid",
+
+      didDrawPage: () => {
+        addHeader();
+      },
     });
+
+    // -----------------------------
+    // LAST STEP: ADD PAGE NUMBERS
+    //-----------------------------
+    const totalPages = doc.getNumberOfPages();
+
+    for (let p = 1; p <= totalPages; p++) {
+      doc.setPage(p);
+      addFooter(p, totalPages);
+    }
+
+    // SAVE PDF
     doc.save("Purchase_Report.pdf");
   };
 
@@ -261,10 +341,58 @@ export default function PurchasePage() {
       alert("⚠️ Fill Party and Items before generating invoice");
       return;
     }
-    const doc = new jsPDF();
-    doc.text(`Invoice - ${partyName}`, 14, 14);
+
+    const doc = new jsPDF("p", "mm", "a4");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const addHeader = () => {
+      doc.addImage("/ray-log.png", "PNG", 15, 10, 18, 18);
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("RAY ENGINEERING", 50, 15);
+      doc.setFontSize(10);
+      doc.text("Contact No: 9337670266", 50, 22);
+      doc.text("E-Mail: accounts@rayengineering.co", 50, 28);
+      doc.setLineWidth(0.5);
+      doc.line(10, 40, 200, 40);
+      doc.setFontSize(16);
+      doc.text("PURCHASE INVOICE", pageWidth / 2, 55, { align: "center" });
+      doc.setFontSize(11);
+      doc.text(`Party: ${partyName}`, 14, 65);
+      doc.text(`Invoice No: ${invoiceNumber}`, 14, 72);
+      doc.text(`Invoice Date: ${invoiceDate}`, 14, 79);
+    };
+
+    const addFooter = (pageNum: number, totalPages: number) => {
+      const footerY = pageHeight - 40;
+      doc.line(10, footerY, 200, footerY);
+      doc.setFontSize(9);
+      doc.text(
+        "Registrations:\nGSTIN: 21AIJHPR1040H1ZO\nUDYAM: DO-12-0001261\nState: Odisha (Code: 21)",
+        10,
+        footerY + 8
+      );
+      doc.text(
+        "Registered Address:\nAt- Gandakipur, Po- Gopiakuda,\nPs- Kujanga, Dist- Jagatsinghpur",
+        75,
+        footerY + 8
+      );
+      doc.text(
+        `Contact & Web:\nMD Email: md@rayengineering.co\nWebsite: rayengineering.co\nPage ${pageNum} / ${totalPages}`,
+        150,
+        footerY + 8
+      );
+    };
+
+    addHeader();
+
+    // ----------------------
+    // AUTO TABLE
+    // ----------------------
     autoTable(doc, {
-      startY: 25,
+      startY: 90,
+      margin: { top: 90, bottom: 50 },
       head: [["Item", "Qty", "Unit", "Rate", "Amount"]],
       body: items.map((i) => [
         i.itemName,
@@ -273,7 +401,54 @@ export default function PurchasePage() {
         i.rate,
         i.amount.toFixed(2),
       ]),
+      styles: { fontSize: 10, halign: "center", cellPadding: 3 },
+      headStyles: { fillColor: [41, 128, 185], textColor: "#fff" },
+      theme: "grid",
+      didDrawPage: (data) => {
+        const pageNumber = data.pageNumber;
+
+        // ✅ Use `as any` to safely call getNumberOfPages
+        const totalPages = doc.getNumberOfPages();
+
+        // ✅ Loop through pages and apply correct footer
+        for (let p = 1; p <= totalPages; p++) {
+          doc.setPage(p);
+          addFooter(p, totalPages);
+        }
+
+        addHeader();
+      },
     });
+
+    // ----------------------
+    // TOTALS ON LAST PAGE
+    // ----------------------
+    const lastTable = (doc as any).lastAutoTable;
+    const finalY = lastTable?.finalY ?? 90;
+    let totalsY = finalY + 10;
+
+    if (totalsY > pageHeight - 60) {
+      doc.addPage();
+      totalsY = 100;
+    }
+
+    const totalPages = (doc as any).getNumberOfPages();
+    const currentPage = totalPages;
+    doc.setPage(currentPage);
+
+    addHeader();
+    addFooter(currentPage, totalPages);
+
+    doc.setFontSize(12);
+    doc.text(`Subtotal: INR ${totalInvoice.toFixed(2)}`, 150, totalsY);
+    doc.text(
+      `GST (${gstPercent}%): INR ${gstAmount.toFixed(2)}`,
+      150,
+      totalsY + 7
+    );
+    doc.setFont("helvetica", "bold");
+    doc.text(`Grand Total: INR ${grandTotal.toFixed(2)}`, 150, totalsY + 14);
+
     doc.save(`Invoice_${invoiceNumber}.pdf`);
   };
 
@@ -467,7 +642,7 @@ export default function PurchasePage() {
                 {editingId ? "Update Record" : "Save Purchase"}
               </button>
               <button className={styles.pdfButton} onClick={generateInvoicePDF}>
-                📄 Download Invoice PDF
+                Download Invoice PDF
               </button>
             </div>
           </>

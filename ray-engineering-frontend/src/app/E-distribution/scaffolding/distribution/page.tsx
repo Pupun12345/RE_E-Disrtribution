@@ -138,29 +138,31 @@ export default function DistributionPage() {
     return true;
   };
   const handleDelete = async (record: DistributionRecord) => {
-  const formattedDate = record.issueDate.split("T")[0];
+    const formattedDate = record.issueDate.split("T")[0];
 
-  if (!window.confirm(`Delete ${record.itemName} issued on ${formattedDate}?`)) {
-    return;
-  }
-
-  try {
-    const res = await api.delete(`/api/scaffolding-distribution/${record._id}`);
-
-    if (res.success) {
-      await fetchDistributions(); 
-      await fetchStock();
-      alert("🗑️ Record deleted successfully!");
-    } else {
-      alert("❌ Failed to delete record!");
+    if (
+      !window.confirm(`Delete ${record.itemName} issued on ${formattedDate}?`)
+    ) {
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Error deleting record!");
-  }
-};
 
+    try {
+      const res = await api.delete(
+        `/api/scaffolding-distribution/${record._id}`
+      );
 
+      if (res.success) {
+        await fetchDistributions();
+        await fetchStock();
+        alert("🗑️ Record deleted successfully!");
+      } else {
+        alert("❌ Failed to delete record!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error deleting record!");
+    }
+  };
 
   // ====================== ADD DISTRIBUTION ======================
   const handleAddDistribution = async () => {
@@ -238,10 +240,65 @@ export default function DistributionPage() {
 
   // ====================== EXPORT ======================
   const exportPDF = () => {
-    const doc = new jsPDF("l", "mm", "a4");
-    doc.text("Scaffolding Distribution Report", 14, 15);
+    const doc = new jsPDF("l", "mm", "a4"); // Landscape
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // Header function (adapted from generateInvoicePDF)
+    const addHeader = () => {
+      doc.addImage("/ray-log.png", "PNG", 15, 10, 18, 18);
+
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("RAY ENGINEERING", 50, 15);
+
+      doc.setFontSize(10);
+      doc.text("Contact No: 9337670266", 50, 22);
+      doc.text("E-Mail: accounts@rayengineering.co", 50, 28);
+
+      doc.setLineWidth(0.5);
+      doc.line(10, 40, pageWidth - 10, 40);
+
+      doc.setFontSize(16);
+      doc.text("SCAFFOLDING DISTRIBUTION REPORT", pageWidth / 2, 55, {
+        align: "center",
+      });
+    };
+
+    // Footer function (adapted from generateInvoicePDF)
+    const addFooter = (pageNum: number, totalPages: number) => {
+      const footerY = pageHeight - 40;
+
+      doc.line(10, footerY, pageWidth - 10, footerY);
+      doc.setFontSize(9);
+
+      doc.text(
+        "Registrations:\nGSTIN: 21AIJHPR1040H1ZO\nUDYAM: DO-12-0001261\nState: Odisha (Code: 21)",
+        10,
+        footerY + 8
+      );
+
+      doc.text(
+        "Registered Address:\nAt- Gandakipur, Po- Gopiakuda,\nPs- Kujanga, Dist- Jagatsinghpur",
+        pageWidth / 3,
+        footerY + 8
+      );
+
+      doc.text(
+        `Contact & Web:\nMD Email: md@rayengineering.co\nWebsite: rayengineering.co\nPage ${pageNum} / ${totalPages}`,
+        (pageWidth / 3) * 2,
+        footerY + 8
+      );
+    };
+
+    // Draw first page header
+    addHeader();
+
+    // Use autoTable for the scaffolding distribution data
     autoTable(doc, {
-      startY: 25,
+      startY: 65,
+      margin: { top: 60, bottom: 50 },
       head: [
         [
           "W/O No.",
@@ -268,7 +325,24 @@ export default function DistributionPage() {
         r.issuedQuantity,
         r.issuedWeight,
       ]),
+
+      styles: { fontSize: 10, halign: "center", cellPadding: 3 },
+      headStyles: { fillColor: [41, 128, 185], textColor: "#fff" },
+      theme: "grid",
+
+      didDrawPage: (data) => {
+        addHeader();
+      },
     });
+
+    // Add footers to all pages
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      addFooter(i, totalPages);
+    }
+
+    // Save the PDF
     doc.save("Distribution_Report.pdf");
   };
 
@@ -472,7 +546,7 @@ export default function DistributionPage() {
                               })
                             }
                           >
-                             Edit
+                            Edit
                           </button>
                         </td>
                         <td>
@@ -480,7 +554,7 @@ export default function DistributionPage() {
                             className={styles.deleteButton}
                             onClick={() => handleDelete(r)}
                           >
-                             Delete
+                            Delete
                           </button>
                         </td>
                       </tr>
