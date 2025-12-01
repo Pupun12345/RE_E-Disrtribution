@@ -29,12 +29,4 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// Pre-save hook for password hashing (example)
-// userSchema.pre("save", async function (next) {
-//   if (!this.isModified("password")) return next();
-//   this.password = await hashPassword(this.password);
-//   next();
-// });
-
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);

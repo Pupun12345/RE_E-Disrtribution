@@ -208,6 +208,16 @@ export default function DashboardPage() {
                 </details>
               </li>
             ))}
+            {role === "admin" && (
+              <li>
+                <Link
+                  href="/E-distribution/change-password"
+                  className={styles.linkHighlight}
+                >
+                  Change Password
+                </Link>
+              </li>
+            )}
 
             <li>
               <button onClick={handleLogout} className={styles.logout}>

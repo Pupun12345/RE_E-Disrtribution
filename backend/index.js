@@ -23,7 +23,7 @@ const scaffoldingPurchaseRoutes = require("./routes/scaffolding/scaffoldingPurch
 const scaffoldingDistributionRoutes = require("./routes/scaffolding/scaffoldingDistributionRoutes");
 const scaffoldingStockRoutes = require("./routes/scaffolding/scaffoldingstockRoutes");
 const scaffoldingReturnRoutes = require("./routes/scaffolding/scaffoldingReturnRoutes");
-
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -31,9 +31,7 @@ const app = express();
 // Middleware
 // =============================
 app.use(express.json());
-app.use(
-  cors()
-);
+app.use(cors());
 
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/stock", stockRoutes);
@@ -49,6 +47,7 @@ app.use("/api/scaffolding-purchases", scaffoldingPurchaseRoutes);
 app.use("/api/scaffolding-distribution", scaffoldingDistributionRoutes);
 app.use("/api/scaffolding-stock", scaffoldingStockRoutes);
 app.use("/api/scaffolding-returns", scaffoldingReturnRoutes);
+app.use("/api/users", userRoutes);
 
 // =============================
 // Health Check
@@ -223,7 +222,10 @@ app.post("/api/vendors", auth, async (req, res) => {
 // =============================
 app.get("/api/vendors", auth, async (req, res) => {
   try {
-    const vendors = await Vendor.find().populate("createdBy", "firstname email");
+    const vendors = await Vendor.find().populate(
+      "createdBy",
+      "firstname email"
+    );
     res.status(200).json({
       success: true,
       vendors,
@@ -266,7 +268,6 @@ app.delete("/api/vendors/:id", auth, async (req, res) => {
     });
   }
 });
-
 
 // =============================
 // Start Server
