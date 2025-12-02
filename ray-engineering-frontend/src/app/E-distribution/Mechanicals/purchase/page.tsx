@@ -628,8 +628,11 @@ export default function MechanicalPurchasePage() {
                 GST (%):
                 <input
                   type="number"
-                  value={gstPercent}
-                  onChange={(e) => setGstPercent(Number(e.target.value))}
+                  value={gstPercent === 0 ? "" : gstPercent}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setGstPercent(value === "" ? 0 : Number(value));
+                  }}
                   style={{
                     width: "60px",
                     marginLeft: "8px",
