@@ -232,7 +232,8 @@ export default function DistributionPage() {
     return (
       (!from || date >= from) &&
       (!to || date <= to) &&
-      (r.itemName.toLowerCase().includes(search) ||
+      (r.woNumber.toLowerCase().includes(search) ||
+        r.itemName.toLowerCase().includes(search) ||
         r.tslManager.toLowerCase().includes(search) ||
         r.supervisorName.toLowerCase().includes(search))
     );

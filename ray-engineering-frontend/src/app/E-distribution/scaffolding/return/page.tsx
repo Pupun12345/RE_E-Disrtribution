@@ -189,6 +189,7 @@ export default function ReturnPage() {
   // ================= FILTER LOGIC =================
   const filteredRecords = returnRecords.filter((r) => {
     const matchesSearch =
+      r.woNumber.toLowerCase().includes(search) ||
       r.itemName.toLowerCase().includes(search.toLowerCase()) ||
       r.personName.toLowerCase().includes(search.toLowerCase()) ||
       r.location.toLowerCase().includes(search.toLowerCase());
